@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TelegramClone</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings_default_username">Katerina Morozova</string>
+    <string name="settings_default_status">в сети</string>
+    <string name="settings_text_account">Аккаунт</string>
+    <string name="settings_default_phone">+7(XXX)XXX-XX_XX</string>
+    <string name="settings_hint_phone">Нажмите, чтобы изменить номер телефона</string>
+    <string name="settings_default_change_username">\@my_username</string>
+    <string name="settings_hint_change_username">Имя пользователя</string>
+    <string name="settings_default_info">Всем приветик в этом чатике</string>
+    <string name="settings_default_hint_info">Напишите немного о себе</string>
+    <string name="settings_menu_change_name">Изменить имя</string>
+    <string name="settings_menu_exit">Выйход</string>
+    <string name="cd_register_image">register_image</string>
+    <string name="register_text_enter_code">Введите код</string>
+    <string name="register_text_we_sent">Мы отправили SMS с кодом проверки на Ваш телефон</string>
+    <string name="register_hint_default_code">- - - - - -</string>
+    <string name="register_title_your_phone">Ваш телефон</string>
+    <string name="register_toast_enter_phone">Введите номер телефона</string>
+</resources>
