@@ -19,4 +19,6 @@
     <string name="register_hint_default_code">- - - - - -</string>
     <string name="register_title_your_phone">Ваш телефон</string>
     <string name="register_toast_enter_phone">Введите номер телефона</string>
+    <string name="check_your_phone">Проверка номера телефона</string>
+    <string name="register_phone_hint">Введите номер телефона</string>
 </resources>

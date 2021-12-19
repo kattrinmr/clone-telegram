@@ -10,6 +10,7 @@ import com.katiacompany.clonetelegram.databinding.ActivityMainBinding
 import com.katiacompany.clonetelegram.ui.fragments.ChatsFragment
 import com.katiacompany.clonetelegram.ui.objects.AppDrawer
 import com.katiacompany.clonetelegram.utilities.AUTH
+import com.katiacompany.clonetelegram.utilities.initFirebase
 import com.katiacompany.clonetelegram.utilities.replaceActivity
 import com.katiacompany.clonetelegram.utilities.replaceFragment
 
@@ -44,6 +45,6 @@ class MainActivity : AppCompatActivity() {
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
-        AUTH = FirebaseAuth.getInstance()
+        initFirebase()
     }
 }
