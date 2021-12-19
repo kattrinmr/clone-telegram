@@ -12,7 +12,7 @@
     <string name="settings_default_info">Всем приветик в этом чатике</string>
     <string name="settings_default_hint_info">Напишите немного о себе</string>
     <string name="settings_menu_change_name">Изменить имя</string>
-    <string name="settings_menu_exit">Выйход</string>
+    <string name="settings_menu_exit">Выход</string>
     <string name="cd_register_image">register_image</string>
     <string name="register_text_enter_code">Введите код</string>
     <string name="register_text_we_sent">Мы отправили SMS с кодом проверки на Ваш телефон</string>

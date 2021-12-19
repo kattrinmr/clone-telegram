@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
 import com.katiacompany.clonetelegram.activities.RegisterActivity
 import com.katiacompany.clonetelegram.databinding.ActivityMainBinding
 import com.katiacompany.clonetelegram.ui.fragments.ChatsFragment
 import com.katiacompany.clonetelegram.ui.objects.AppDrawer
+import com.katiacompany.clonetelegram.utilities.AUTH
 import com.katiacompany.clonetelegram.utilities.replaceActivity
 import com.katiacompany.clonetelegram.utilities.replaceFragment
 
@@ -30,10 +32,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFunc() {
-        if (false) {
+        if (AUTH.currentUser != null) {
             setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            replaceFragment(ChatsFragment())
+            replaceFragment(ChatsFragment(), false)
         } else {
             replaceActivity(RegisterActivity())
         }
@@ -42,5 +44,6 @@ class MainActivity : AppCompatActivity() {
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
+        AUTH = FirebaseAuth.getInstance()
     }
 }
