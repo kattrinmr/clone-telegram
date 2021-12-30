@@ -8,6 +8,7 @@ import com.katiacompany.clonetelegram.R
 import com.katiacompany.clonetelegram.activities.RegisterActivity
 import com.katiacompany.clonetelegram.utilities.AUTH
 import com.katiacompany.clonetelegram.utilities.replaceActivity
+import com.katiacompany.clonetelegram.utilities.replaceFragment
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -26,6 +27,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 AUTH.signOut()
                 (activity as MainActivity).replaceActivity(RegisterActivity())
             }
+            R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())
         }
         return true
     }
