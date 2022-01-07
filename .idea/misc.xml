@@ -7,7 +7,9 @@
         <entry key="app/src/main/res/drawable/ic_btn_action_menu.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.29483695652173914" />
+        <entry key="app/src/main/res/layout/fragment_change_bio.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_change_name.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_change_username.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_chats.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/fragment_enter_phone_number.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.29483695652173914" />

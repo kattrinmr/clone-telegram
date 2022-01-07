@@ -36,6 +36,9 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.settingsChangeInfo.text = USER.bio
         binding.settingsStatus.text = USER.status
         binding.settingsChangeUsername.text = USER.username
+
+        binding.settingsBtnChangeUsername.setOnClickListener { replaceFragment(ChangeUsernameFragment()) }
+        binding.settingsBtnChangeInfo.setOnClickListener { replaceFragment(ChangeBioFragment()) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

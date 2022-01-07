@@ -9,7 +9,7 @@ import com.katiacompany.clonetelegram.R
 import com.katiacompany.clonetelegram.databinding.FragmentChangeNameBinding
 import com.katiacompany.clonetelegram.utilities.*
 
-class ChangeNameFragment : BaseFragment(R.layout.fragment_change_name) {
+class ChangeNameFragment : BaseChangeFragment(R.layout.fragment_change_name) {
 
     private lateinit var binding: FragmentChangeNameBinding
 
@@ -23,24 +23,18 @@ class ChangeNameFragment : BaseFragment(R.layout.fragment_change_name) {
 
     override fun onResume() {
         super.onResume()
-        setHasOptionsMenu(true)
+        initFullnameList()
+    }
+
+    private fun initFullnameList() {
         val fullnameList = USER.fullname.split(" ")
-        binding.settingsInputName.setText(fullnameList[0])
-        binding.settingsInputSurname.setText(fullnameList[1])
+        if (fullnameList.size > 1) {
+            binding.settingsInputName.setText(fullnameList[0])
+            binding.settingsInputSurname.setText(fullnameList[1])
+        } else binding.settingsInputName.setText(fullnameList[0])
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        (activity as MainActivity).menuInflater.inflate(R.menu.settings_confirm_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.settings_confirm_change -> changeName()
-        }
-        return true
-    }
-
-    private fun changeName() {
+    override fun change() {
         val name = binding.settingsInputName.text.toString()
         val surname = binding.settingsInputSurname.text.toString()
 
