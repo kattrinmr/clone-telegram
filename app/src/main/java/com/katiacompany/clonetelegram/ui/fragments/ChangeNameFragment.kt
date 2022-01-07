@@ -9,7 +9,7 @@ import com.katiacompany.clonetelegram.R
 import com.katiacompany.clonetelegram.databinding.FragmentChangeNameBinding
 import com.katiacompany.clonetelegram.utilities.*
 
-class ChangeNameFragment : Fragment() {
+class ChangeNameFragment : BaseFragment(R.layout.fragment_change_name) {
 
     private lateinit var binding: FragmentChangeNameBinding
 
@@ -24,6 +24,9 @@ class ChangeNameFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setHasOptionsMenu(true)
+        val fullnameList = USER.fullname.split(" ")
+        binding.settingsInputName.setText(fullnameList[0])
+        binding.settingsInputSurname.setText(fullnameList[1])
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

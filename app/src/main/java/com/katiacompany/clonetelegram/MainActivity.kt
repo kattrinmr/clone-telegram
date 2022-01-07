@@ -5,14 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.katiacompany.clonetelegram.activities.RegisterActivity
 import com.katiacompany.clonetelegram.databinding.ActivityMainBinding
+import com.katiacompany.clonetelegram.models.User
 import com.katiacompany.clonetelegram.ui.fragments.ChatsFragment
 import com.katiacompany.clonetelegram.ui.objects.AppDrawer
-import com.katiacompany.clonetelegram.utilities.AUTH
-import com.katiacompany.clonetelegram.utilities.initFirebase
-import com.katiacompany.clonetelegram.utilities.replaceActivity
-import com.katiacompany.clonetelegram.utilities.replaceFragment
+import com.katiacompany.clonetelegram.utilities.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,5 +47,13 @@ class MainActivity : AppCompatActivity() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
         initFirebase()
+        initUser()
+    }
+
+    private fun initUser() {
+        REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
+            .addListenerForSingleValueEvent(AppValueEventListener {
+                USER = it.getValue(User::class.java) ?: User()
+            })
     }
 }

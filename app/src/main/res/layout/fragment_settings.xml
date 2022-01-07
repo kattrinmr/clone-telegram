@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
-            android:text="@string/settings_default_username"
+            tools:text="@string/settings_default_username"
             android:textSize="@dimen/normalText"
             android:layout_marginTop="@dimen/vertical_margin"
             android:layout_marginStart="@dimen/horizontal_margin"
@@ -41,10 +41,11 @@
         </TextView>
 
         <TextView
+            android:id="@+id/settings_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccentDark"
-            android:text="@string/settings_default_status"
+            tools:text="@string/settings_default_status"
             android:textSize="@dimen/smallText"
             android:layout_marginStart="@dimen/horizontal_margin"
             app:layout_constraintStart_toEndOf="@id/settings_user_photo"
@@ -75,7 +76,7 @@
 
         <TextView
             android:id="@+id/settings_phone_number"
-            android:text="@string/settings_default_phone"
+            tools:text="@string/settings_default_phone"
             app:layout_constraintTop_toTopOf="@+id/settings_btn_change_phone"
             app:layout_constraintStart_toStartOf="parent"
             style="@style/normal_text" />
@@ -104,7 +105,7 @@
 
         <TextView
             android:id="@+id/settings_change_username"
-            android:text="@string/settings_default_change_username"
+            tools:text="@string/settings_default_change_username"
             app:layout_constraintTop_toTopOf="@+id/settings_btn_change_username"
             app:layout_constraintStart_toStartOf="parent"
             style="@style/normal_text" />
@@ -133,7 +134,7 @@
 
         <TextView
             android:id="@+id/settings_change_info"
-            android:text="@string/settings_default_info"
+            tools:text="@string/settings_default_info"
             app:layout_constraintTop_toTopOf="@+id/settings_btn_change_info"
             app:layout_constraintStart_toStartOf="parent"
             style="@style/normal_text" />
