@@ -1,34 +1,41 @@
 package com.katiacompany.clonetelegram
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.widget.Toolbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.StorageReference
 import com.katiacompany.clonetelegram.activities.RegisterActivity
 import com.katiacompany.clonetelegram.databinding.ActivityMainBinding
 import com.katiacompany.clonetelegram.models.User
 import com.katiacompany.clonetelegram.ui.fragments.ChatsFragment
 import com.katiacompany.clonetelegram.ui.objects.AppDrawer
 import com.katiacompany.clonetelegram.utilities.*
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mBinding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+    lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
     private lateinit var mToolbar: Toolbar
     lateinit var mAppDrawer: AppDrawer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onStart() {
         super.onStart()
+        APP_ACTIVITY = this
         initFields()
         initFunc()
     }
@@ -41,10 +48,23 @@ class MainActivity : AppCompatActivity() {
         } else {
             replaceActivity(RegisterActivity())
         }
+
+        cropActivityResultLauncher = registerForActivityResult(cropActivityResultContract) { it ->
+            it?.let { uri ->
+                val path: StorageReference = REF_STORAGE_ROOT.child(FOLDER_PROFILE_IMAGE)
+                    .child(UID)
+                path.putFile(uri).addOnCompleteListener { it2 ->
+                    if (it2.isSuccessful) {
+                        showToast(getString(R.string.toast_data_update))
+                    } else showToast(it2.exception?.message.toString())
+                }
+            }
+        }
+
     }
 
     private fun initFields() {
-        mToolbar = mBinding.mainToolbar
+        mToolbar = binding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
         initFirebase()
         initUser()
@@ -55,5 +75,24 @@ class MainActivity : AppCompatActivity() {
             .addListenerForSingleValueEvent(AppValueEventListener {
                 USER = it.getValue(User::class.java) ?: User()
             })
+    }
+
+    private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
+        override fun createIntent(context: Context, input: Any?): Intent {
+            return CropImage.activity()
+                .setAspectRatio(1,1)
+                .setRequestedSize(600, 600)
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .getIntent(APP_ACTIVITY)
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            return CropImage.getActivityResult(intent)?.uri
+        }
+    }
+
+    fun hideKeyboard() {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(window.decorView.windowToken, 0)
     }
 }

@@ -2,15 +2,13 @@ package com.katiacompany.clonetelegram.ui.fragments
 
 import android.os.Bundle
 import android.view.*
-import com.katiacompany.clonetelegram.MainActivity
+import androidx.activity.result.ActivityResultLauncher
 import com.katiacompany.clonetelegram.R
 import com.katiacompany.clonetelegram.activities.RegisterActivity
-import com.katiacompany.clonetelegram.databinding.FragmentChangeNameBinding
 import com.katiacompany.clonetelegram.databinding.FragmentSettingsBinding
-import com.katiacompany.clonetelegram.utilities.AUTH
-import com.katiacompany.clonetelegram.utilities.USER
-import com.katiacompany.clonetelegram.utilities.replaceActivity
-import com.katiacompany.clonetelegram.utilities.replaceFragment
+import com.katiacompany.clonetelegram.utilities.*
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -39,7 +37,13 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
         binding.settingsBtnChangeUsername.setOnClickListener { replaceFragment(ChangeUsernameFragment()) }
         binding.settingsBtnChangeInfo.setOnClickListener { replaceFragment(ChangeBioFragment()) }
+        binding.settingsChangePhoto.setOnClickListener { changePhotoUser() }
     }
+
+    private fun changePhotoUser() {
+        APP_ACTIVITY.cropActivityResultLauncher.launch(null)
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         activity?.menuInflater?.inflate(R.menu.settings_action_menu, menu)
@@ -49,7 +53,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         when (item.itemId) {
             R.id.settings_menu_exit -> {
                 AUTH.signOut()
-                (activity as MainActivity).replaceActivity(RegisterActivity())
+                APP_ACTIVITY.replaceActivity(RegisterActivity())
             }
             R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())
         }
