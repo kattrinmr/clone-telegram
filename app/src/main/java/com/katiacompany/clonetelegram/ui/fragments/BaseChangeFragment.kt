@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.katiacompany.clonetelegram.MainActivity
 import com.katiacompany.clonetelegram.R
 import com.katiacompany.clonetelegram.utilities.APP_ACTIVITY
+import com.katiacompany.clonetelegram.utilities.hideKeyboard
 
 open class BaseChangeFragment(layout: Int) : Fragment(layout) {
 
@@ -13,11 +14,7 @@ open class BaseChangeFragment(layout: Int) : Fragment(layout) {
         super.onStart()
         (activity as MainActivity).mAppDrawer.disableDrawer()
         setHasOptionsMenu(true)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        APP_ACTIVITY.hideKeyboard()
+        hideKeyboard()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

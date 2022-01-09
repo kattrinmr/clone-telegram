@@ -1,7 +1,6 @@
 package com.katiacompany.clonetelegram.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,11 +29,12 @@ class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {
     override fun change() {
         super.change()
         val newBio = binding.settingsInputBio.text.toString()
-        REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_BIO).setValue(newBio)
+        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_BIO).setValue(newBio)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     showToast(getString(R.string.toast_data_update))
                     USER.bio = newBio
+                    hideKeyboard()
                     parentFragmentManager.popBackStack()
                 } else showToast(it.exception?.message.toString())
             }

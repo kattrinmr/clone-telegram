@@ -1,5 +1,6 @@
 package com.katiacompany.clonetelegram.utilities
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -8,7 +9,7 @@ import com.google.firebase.storage.StorageReference
 import com.katiacompany.clonetelegram.models.User
 
 lateinit var AUTH: FirebaseAuth
-lateinit var UID: String
+lateinit var CURRENT_UID: String
 lateinit var USER: User
 
 lateinit var REF_DATABASE_ROOT: DatabaseReference
@@ -25,11 +26,44 @@ const val CHILD_PHONE = "phone"
 const val CHILD_USERNAME = "username"
 const val CHILD_FULLNAME = "fullname"
 const val CHILD_BIO = "bio"
+const val CHILD_PHOTO_URL = "photoUrl"
+const val CHILD_STATUS = "status"
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     USER = User()
-    UID = AUTH.currentUser?.uid.toString()
+    CURRENT_UID = AUTH.currentUser?.uid.toString()
     REF_STORAGE_ROOT = FirebaseStorage.getInstance().reference
 }
+
+inline fun initUser(crossinline function: () -> Unit) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
+        .addListenerForSingleValueEvent(AppValueEventListener {
+            USER = it.getValue(User::class.java) ?: User()
+            if (USER.username.isEmpty()) USER.username = CURRENT_UID
+            function()
+        })
+}
+
+inline fun putUrlToDatabase(url: String, crossinline function: () -> Unit) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
+        .child(CHILD_PHOTO_URL).setValue(url)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
+
+inline fun getUrlFromStorage(path: StorageReference, crossinline  function: (url: String) -> Unit) {
+    path.downloadUrl
+        .addOnSuccessListener { function(it.toString()) }
+        .addOnFailureListener { showToast(it.message.toString()) }
+
+}
+
+inline fun putImageToStorage(uri: Uri, path: StorageReference, crossinline  function: () -> Unit) {
+    path.putFile(uri)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
+
+}
+

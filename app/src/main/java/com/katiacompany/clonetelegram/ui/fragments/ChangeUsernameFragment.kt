@@ -2,10 +2,7 @@ package com.katiacompany.clonetelegram.ui.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
-import com.katiacompany.clonetelegram.MainActivity
 import com.katiacompany.clonetelegram.R
-import com.katiacompany.clonetelegram.databinding.FragmentChangeNameBinding
 import com.katiacompany.clonetelegram.databinding.FragmentChangeUsernameBinding
 import com.katiacompany.clonetelegram.utilities.*
 import java.util.*
@@ -41,14 +38,14 @@ class ChangeUsernameFragment : BaseChangeFragment(R.layout.fragment_change_usern
     }
 
     private fun changeUsername() {
-        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(mNewUsername).setValue(UID)
+        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(mNewUsername).setValue(CURRENT_UID)
             .addOnCompleteListener {
                 if (it.isSuccessful) updateCurrentUsername()
             }
     }
 
     private fun updateCurrentUsername() {
-        REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_USERNAME)
+        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_USERNAME)
             .setValue(mNewUsername)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -64,6 +61,7 @@ class ChangeUsernameFragment : BaseChangeFragment(R.layout.fragment_change_usern
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     showToast(getString(R.string.toast_data_update))
+                    hideKeyboard()
                     parentFragmentManager.popBackStack()
                     USER.username = mNewUsername
                 }
