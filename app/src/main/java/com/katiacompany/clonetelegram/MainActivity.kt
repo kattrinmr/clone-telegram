@@ -1,14 +1,19 @@
 package com.katiacompany.clonetelegram
 
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.katiacompany.clonetelegram.activities.RegisterActivity
 import com.katiacompany.clonetelegram.databinding.ActivityMainBinding
 import com.katiacompany.clonetelegram.models.User
 import com.katiacompany.clonetelegram.ui.fragments.ChatsFragment
 import com.katiacompany.clonetelegram.ui.objects.AppDrawer
 import com.katiacompany.clonetelegram.utilities.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         initFirebase()
         initUser {
+            CoroutineScope(Dispatchers.IO).launch {
+                initContacts()
+            }
             initFields()
             initFunc()
         }
@@ -37,7 +45,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        AppStatus.updateStatus(AppStatus.OFFLINE)
+        AppStatus.updateStatus(AppStatus.OFFLINE    )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (ContextCompat.checkSelfPermission(APP_ACTIVITY, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
+            initContacts()
     }
 
     private fun initFunc() {
